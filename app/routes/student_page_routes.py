@@ -7,7 +7,6 @@ from app.models.student import Student
 from app.services.student_service import (
     create_student,
     delete_student,
-    get_all_students,
     get_courses_by_ids,
     get_student_by_student_id,
     update_student,
