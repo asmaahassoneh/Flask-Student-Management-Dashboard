@@ -9,6 +9,23 @@
       <a class="btn" href="{{ url_for('student_page_bp.add_student') }}">Add Student</a>
     </div>
 
+    <form method="GET" action="{{ url_for('student_page_bp.list_students') }}" class="search-form" style="margin: 18px 0;">
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <input
+          type="text"
+          name="search"
+          placeholder="Search by name or student ID"
+          value="{{ search }}"
+          style="flex: 1; min-width: 220px;"
+        />
+        <button type="submit" class="btn">Search</button>
+
+        {% if search %}
+        <a class="btn secondary-btn" href="{{ url_for('student_page_bp.list_students') }}">Clear</a>
+        {% endif %}
+      </div>
+    </form>
+
     {% if students %}
     <table class="student-table">
       <thead>
@@ -37,6 +54,28 @@
         {% endfor %}
       </tbody>
     </table>
+
+    <div class="pagination" style="margin-top: 20px; display: flex; gap: 10px; align-items: center; justify-content: center; flex-wrap: wrap;">
+      {% if pagination.has_prev %}
+      <a
+        class="btn secondary-btn"
+        href="{{ url_for('student_page_bp.list_students', page=pagination.prev_num, search=search) }}"
+      >
+        Previous
+      </a>
+      {% endif %}
+
+      <span>Page {{ pagination.page }} of {{ pagination.pages or 1 }}</span>
+
+      {% if pagination.has_next %}
+      <a
+        class="btn secondary-btn"
+        href="{{ url_for('student_page_bp.list_students', page=pagination.next_num, search=search) }}"
+      >
+        Next
+      </a>
+      {% endif %}
+    </div>
     {% else %}
     <p class="muted">No students found.</p>
     {% endif %}

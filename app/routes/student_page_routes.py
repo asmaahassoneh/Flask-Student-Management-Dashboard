@@ -23,8 +23,26 @@ student_page_bp = Blueprint("student_page_bp", __name__, url_prefix="/students")
 @student_page_bp.route("")
 @login_required
 def list_students():
-    students = get_all_students()
-    return render_template("students.html", students=students)
+    search = request.args.get("search", "").strip()
+    page = request.args.get("page", 1, type=int)
+    per_page = 5
+
+    query = Student.query.order_by(Student.name.asc())
+
+    if search:
+        query = query.filter(
+            (Student.name.ilike(f"%{search}%"))
+            | (Student.student_id.ilike(f"%{search}%"))
+        )
+
+    pagination = query.paginate(page=page, per_page=per_page, error_out=False)
+
+    return render_template(
+        "students.html",
+        students=pagination.items,
+        pagination=pagination,
+        search=search,
+    )
 
 
 @student_page_bp.route("/add", methods=["GET", "POST"])
