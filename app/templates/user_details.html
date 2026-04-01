@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}User Details{% endblock %}
+
+{% block content %}
+<div class="home">
+  <div class="glass-card">
+    <h2>User Details</h2>
+
+    <div class="detail-item">
+      <span>Username</span>
+      <p>{{ user.username }}</p>
+    </div>
+
+    <div class="detail-item">
+      <span>Email</span>
+      <p>{{ user.email }}</p>
+    </div>
+
+    <a class="btn" href="{{ url_for('user_page_bp.edit_user', user_id=user.id) }}">Edit</a>
+
+    <form
+      method="POST"
+      action="{{ url_for('user_page_bp.remove_user', user_id=user.id) }}"
+      style="display: inline"
+      onsubmit="return confirm('Delete this user?');"
+    >
+      <button class="btn danger-btn">Delete</button>
+    </form>
+
+    <a class="btn secondary-btn" href="{{ url_for('user_page_bp.list_users') }}" style="margin-top: 20px;">
+      Back to Users
+    </a>
+  </div>
+</div>
+{% endblock %}
