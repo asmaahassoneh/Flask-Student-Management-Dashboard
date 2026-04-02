@@ -20,7 +20,8 @@ https://flask-student-management-dashboard-fvhv.onrender.com
 * 🎨 Clean UI using HTML, CSS, and Jinja templates
 * ⚠️ Error handling (404, 403, 500)
 * 🧪 Flask test suite
-
+* 🔒 Protected routes using Flask-Login
+* 🛡️ Admin-only access for user management
 ---
 
 ## 🏗️ Project Structure
@@ -42,7 +43,15 @@ https://flask-student-management-dashboard-fvhv.onrender.com
 ├── requirements.txt
 └── README.md
 ```
+---
+## 🧠 Architecture
 
+The project follows a modular architecture:
+
+- **Routes (Blueprints)** → handle HTTP requests
+- **Services** → contain business logic
+- **Models** → define database structure
+- **Utils** → validation and helpers
 ---
 
 ## ⚙️ Technologies Used
@@ -56,6 +65,15 @@ https://flask-student-management-dashboard-fvhv.onrender.com
 * Jinja2 Templates
 * HTML/CSS
 
+---
+## 🧩 Database Initialization
+
+On first run, the application automatically:
+
+- Creates the database
+- Seeds a default admin user
+
+No manual seeding is required.
 ---
 
 ## 🛠️ Installation (Local)
@@ -91,7 +109,7 @@ FLASK_ENV=development
 
 ---
 
-### 6. Run the app
+### 5. Run the app
 
 ```
 python run.py
@@ -117,7 +135,8 @@ Password: Admin123
 ---
 
 ## 🌐 REST API Endpoints
-
+> ⚠️ All API endpoints require authentication.
+> User endpoints require admin privileges.
 ### Students
 
 * GET `/api/students`
@@ -176,17 +195,15 @@ DATABASE_URL=sqlite:///students.db
 
 ## ⚠️ Important Notes
 
-* SQLite is used for development only
-* Data may reset on free Render (ephemeral storage)
+> ⚠️ SQLite is used for demo purposes.
+> On free Render instances, data resets on redeploy due to ephemeral storage.
 
 ---
 
 ## 💡 Future Improvements
 
 * Switch to PostgreSQL (Render DB)
-* Add user profile management
 * Improve UI/UX design
-* Add API authentication (JWT)
 * Deploy frontend separately
 
 ---
