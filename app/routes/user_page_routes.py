@@ -1,5 +1,5 @@
 from flask import Blueprint, abort, flash, redirect, render_template, request, url_for
-from flask_login import login_required
+from flask_login import login_required, current_user
 from sqlalchemy.exc import SQLAlchemyError
 
 from app.models.user import User
@@ -158,6 +158,10 @@ def remove_user(user_id):
     user = get_user_by_id(user_id)
     if user is None:
         abort(404)
+
+    if user.id == current_user.id:
+        flash("You cannot delete your own admin account.", "error")
+        return redirect(url_for("user_page_bp.list_users"))
 
     try:
         delete_user(user)

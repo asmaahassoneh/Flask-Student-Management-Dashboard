@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from flask_login import login_required
+from flask_login import login_required, current_user
 from sqlalchemy.exc import IntegrityError
 
 from app.extensions import db
@@ -137,6 +137,17 @@ def remove_user(user_id):
 
     if user is None:
         return jsonify({"success": False, "error": "User not found."}), 404
+
+    if user.id == current_user.id:
+        return (
+            jsonify(
+                {
+                    "success": False,
+                    "error": "You cannot delete your own admin account.",
+                }
+            ),
+            400,
+        )
 
     delete_user(user)
     return "", 204
