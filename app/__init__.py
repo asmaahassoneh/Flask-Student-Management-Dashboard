@@ -73,21 +73,4 @@ def create_app(config_class=Config):
             return jsonify({"success": False, "error": "Admin access required."}), 403
         return render_template("403.html"), 403
 
-    with app.app_context():
-        db.create_all()
-
-        admin_email = "admin@gmail.com"
-        admin_password = "Admin123"
-
-        existing_admin = User.query.filter_by(email=admin_email).first()
-        if not existing_admin:
-            admin = User(
-                username="admin",
-                email=admin_email,
-                is_admin=True,
-            )
-            admin.set_password(admin_password)
-            db.session.add(admin)
-            db.session.commit()
-
     return app
